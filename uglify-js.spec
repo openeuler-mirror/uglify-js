@@ -27,9 +27,7 @@ use within Node.js.
 Summary:             JavaScript parser, mangler/compressor and beautifier toolkit - core library
 Obsoletes:           uglify-js-common < 2.2.5-4
 Provides:            uglify-js-common = %{version}-%{release}
-%if 0%{?fedora}
 Requires:            web-assets-filesystem
-%endif
 %description -n js-uglify
 JavaScript parser, mangler/compressor and beautifier toolkit.
 This package ships a JavaScript library suitable for use by any JavaScript
