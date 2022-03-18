@@ -3,12 +3,13 @@
 %global installdir  %{_jsdir}
 Name:                uglify-js
 Version:             2.8.22
-Release:             1
+Release:             2
 Summary:             JavaScript parser, mangler/compressor and beautifier toolkit
 License:             BSD
 URL:                 https://github.com/mishoo/UglifyJS2
 Source0:             https://github.com/mishoo/UglifyJS2/archive/v%{version}/uglify-js-%{version}.tar.gz
 Patch0:              uglify-js-esfuzz.patch
+Patch1:              set_timeout.patch
 BuildArch:           noarch
 ExclusiveArch:       %{nodejs_arches} noarch
 Provides:            nodejs-uglify-js = %{version}-%{release}
@@ -61,9 +62,9 @@ ln -sf uglify-js@2 %{buildroot}%{nodejs_sitelib}/uglify-js
 %nodejs_symlink_deps --check
 %{__nodejs} -e 'require("./")'
 %if 0%{?enable_tests}
-sed -i '/timeout/ s/5000/10000/' test/mocha/cli.js
+sed -i '/timeout/ s/15000/300000/' test/mocha/cli.js
 sed -i '/timeout/ s/10000/20000/' test/mocha/let.js
-sed -i '/timeout/ s/20000/40000/' test/mocha/spidermonkey.js
+sed -i '/timeout/ s/20000/400000/' test/mocha/spidermonkey.js
 %__nodejs test/run-tests.js
 %endif
 
@@ -92,5 +93,8 @@ end
 %license LICENSE
 
 %changelog
+* Thu Mar 17 2022 xiaoqianlv <xiaoqian@nj.iscas.ac.cn> - 2.8.22-2
+- set test timeout
+
 * Mon Aug 24 2020 wangyue <wangyue92@huawei.com> - 2.8.22-1
 - package init
